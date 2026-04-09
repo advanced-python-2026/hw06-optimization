@@ -60,18 +60,18 @@ def _compare_csv_result(original: dict, optimized: dict) -> None:
     for cat in original:
         orig_cat = original[cat]
         opt_cat = optimized[cat]
-        assert orig_cat["count"] == opt_cat["count"], (
-            f"Count mismatch for '{cat}': {orig_cat['count']} vs {opt_cat['count']}"
-        )
-        assert _approx_equal(orig_cat["total"], opt_cat["total"]), (
-            f"Total mismatch for '{cat}': {orig_cat['total']} vs {opt_cat['total']}"
-        )
-        assert _approx_equal(orig_cat["average"], opt_cat["average"]), (
-            f"Average mismatch for '{cat}': {orig_cat['average']} vs {opt_cat['average']}"
-        )
-        assert _approx_equal(orig_cat["max_price"], opt_cat["max_price"]), (
-            f"Max price mismatch for '{cat}': {orig_cat['max_price']} vs {opt_cat['max_price']}"
-        )
+        for key in orig_cat:
+            assert key in opt_cat, (
+                f"Missing key '{key}' for category '{cat}'"
+            )
+            if isinstance(orig_cat[key], float):
+                assert _approx_equal(orig_cat[key], opt_cat[key]), (
+                    f"{key} mismatch for '{cat}': {orig_cat[key]} vs {opt_cat[key]}"
+                )
+            else:
+                assert orig_cat[key] == opt_cat[key], (
+                    f"{key} mismatch for '{cat}': {orig_cat[key]} vs {opt_cat[key]}"
+                )
 
 
 def _compare_text_result(original: dict, optimized: dict) -> None:

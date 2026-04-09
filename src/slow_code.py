@@ -60,7 +60,7 @@ def slow_csv_processing(n_rows: int = 200_000) -> dict:
             "quantity": random.randint(1, 100),
         })
 
-    # Deliberately slow aggregation
+    # Deliberately slow aggregation — multiple redundant passes
     result = {}
     for cat in categories:
         # Filter by scanning entire list each time
@@ -87,11 +87,36 @@ def slow_csv_processing(n_rows: int = 200_000) -> dict:
         sorted_rows = sorted(cat_rows, key=lambda r: r["price"], reverse=True)
         max_price = sorted_rows[0]["price"]
 
+        # Deliberately wasteful: recompute total_quantity by scanning ALL rows again
+        total_qty = 0
+        for row in rows:
+            if row["category"] == cat:
+                total_qty += row["quantity"]
+
+        # Deliberately wasteful: build a price list via string conversion and back
+        price_strings = []
+        for row in cat_rows:
+            price_strings.append(f"{row['price']:.10f}")
+        parsed_prices = [float(s) for s in price_strings]
+        _verify_total = sum(parsed_prices)
+
+        # Deliberately wasteful: find min price by sorting again
+        sorted_asc = sorted(cat_rows, key=lambda r: r["price"])
+        min_price = sorted_asc[0]["price"]
+
+        # Deliberately wasteful: compute median by sorting yet again
+        price_list = sorted([row["price"] for row in cat_rows])
+        mid = len(price_list) // 2
+        median = price_list[mid]
+
         result[cat] = {
             "count": count,
             "total": total_price,
             "average": avg,
             "max_price": max_price,
+            "min_price": min_price,
+            "median": median,
+            "total_quantity": total_qty,
         }
 
     return result
