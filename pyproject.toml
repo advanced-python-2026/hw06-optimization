@@ -20,5 +20,8 @@ line-length = 100
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W", "UP"]
 
+[tool.hatch.build.targets.wheel]
+packages = ["hw06", "src"]
+
 [dependency-groups]
 dev = ["pytest>=8.0", "pytest-timeout>=2.0", "ruff>=0.8", "mypy>=1.13", "pyinstrument>=5.0", "numba>=0.60"]
