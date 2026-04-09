@@ -8,6 +8,7 @@
 4. accelerated_run возвращает тот же результат, что и оригинал.
 5. accelerated_run работает быстрее, чем optimized_run.
 """
+
 from __future__ import annotations
 
 import math
@@ -47,9 +48,7 @@ def _compare_matrix(original: list[list[float]], optimized: list[list[float]]) -
             f"Column count mismatch in row {i}: {len(row_a)} vs {len(row_b)}"
         )
         for j, (va, vb) in enumerate(zip(row_a, row_b)):
-            assert _approx_equal(va, vb), (
-                f"Mismatch at [{i}][{j}]: original={va}, optimized={vb}"
-            )
+            assert _approx_equal(va, vb), f"Mismatch at [{i}][{j}]: original={va}, optimized={vb}"
 
 
 def _compare_csv_result(original: dict, optimized: dict) -> None:
@@ -61,9 +60,7 @@ def _compare_csv_result(original: dict, optimized: dict) -> None:
         orig_cat = original[cat]
         opt_cat = optimized[cat]
         for key in orig_cat:
-            assert key in opt_cat, (
-                f"Missing key '{key}' for category '{cat}'"
-            )
+            assert key in opt_cat, f"Missing key '{key}' for category '{cat}'"
             if isinstance(orig_cat[key], float):
                 assert _approx_equal(orig_cat[key], opt_cat[key]), (
                     f"{key} mismatch for '{cat}': {orig_cat[key]} vs {opt_cat[key]}"
@@ -110,6 +107,7 @@ def compare_results(variant: int, original, optimized) -> None:
 # Timing helper
 # ---------------------------------------------------------------------------
 
+
 def _time_call(func, *args, **kwargs) -> tuple:
     """Run func and return (result, elapsed_seconds)."""
     start = time.perf_counter()
@@ -121,6 +119,7 @@ def _time_call(func, *args, **kwargs) -> tuple:
 # ---------------------------------------------------------------------------
 # Session-scoped fixtures (run slow code only once)
 # ---------------------------------------------------------------------------
+
 
 @pytest.fixture(scope="session")
 def variant_number():

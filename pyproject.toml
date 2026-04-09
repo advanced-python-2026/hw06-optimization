@@ -20,6 +20,9 @@ line-length = 100
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W", "UP"]
 
+[tool.ruff.lint.per-file-ignores]
+"src/slow_code.py" = ["N806"]
+
 [tool.hatch.build.targets.wheel]
 packages = ["hw06", "src"]
 

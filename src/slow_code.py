@@ -3,11 +3,12 @@
 Каждая функция корректна, но неэффективна.
 Ваш вариант определяет, какую функцию нужно оптимизировать.
 """
+
 import math
 import random
 
-
 # === Вариант 0: Алгоритм на графах ===
+
 
 def slow_shortest_paths(n: int = 200) -> list[list[float]]:
     """
@@ -42,6 +43,7 @@ def slow_shortest_paths(n: int = 200) -> list[list[float]]:
 
 # === Вариант 1: Обработка CSV ===
 
+
 def slow_csv_processing(n_rows: int = 200_000) -> dict:
     """
     Наивная агрегация данных без pandas: повторное сканирование,
@@ -53,12 +55,14 @@ def slow_csv_processing(n_rows: int = 200_000) -> dict:
     # Generate data as list of dicts (simulating CSV rows)
     rows = []
     for i in range(n_rows):
-        rows.append({
-            "id": i,
-            "category": categories[i % len(categories)],
-            "price": round(random.uniform(1.0, 1000.0), 2),
-            "quantity": random.randint(1, 100),
-        })
+        rows.append(
+            {
+                "id": i,
+                "category": categories[i % len(categories)],
+                "price": round(random.uniform(1.0, 1000.0), 2),
+                "quantity": random.randint(1, 100),
+            }
+        )
 
     # Deliberately slow aggregation — multiple redundant passes
     result = {}
@@ -124,6 +128,7 @@ def slow_csv_processing(n_rows: int = 200_000) -> dict:
 
 # === Вариант 2: Числовые вычисления ===
 
+
 def slow_numerical(n: int = 300) -> list[list[float]]:
     """
     Матричные операции с вложенными циклами: умножение матриц,
@@ -161,20 +166,35 @@ def slow_numerical(n: int = 300) -> list[list[float]]:
 
 # === Вариант 3: Парсинг текста ===
 
+
 def slow_text_parsing(text_size: int = 500_000) -> dict:
     """
     Наивный поиск паттернов в тексте: посимвольный проход,
     конкатенация строк, регулярки в цикле.
     """
-    import re
 
     random.seed(42)
 
     # Generate large text with patterns
     words = [
-        "error", "warning", "info", "debug", "critical",
-        "connection", "timeout", "success", "failure", "retry",
-        "the", "a", "is", "was", "to", "from", "at", "by",
+        "error",
+        "warning",
+        "info",
+        "debug",
+        "critical",
+        "connection",
+        "timeout",
+        "success",
+        "failure",
+        "retry",
+        "the",
+        "a",
+        "is",
+        "was",
+        "to",
+        "from",
+        "at",
+        "by",
     ]
     text = " ".join(random.choice(words) for _ in range(text_size))
 
@@ -209,7 +229,7 @@ def slow_text_parsing(text_size: int = 500_000) -> dict:
                         break
                     positions.append(pos - len(current) + found)
                     idx = found + 1
-                current = current[-len(pattern):]  # keep overlap
+                current = current[-len(pattern) :]  # keep overlap
             pos += 1
 
         result[pattern] = {"count": count, "positions_sample": positions[:10]}
