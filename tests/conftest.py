@@ -38,3 +38,15 @@ def student_name() -> str:
 @pytest.fixture
 def variant(student_name: str) -> int:
     return get_variant(student_name, n_variants=4)
+
+
+@pytest.fixture(scope="session", autouse=True)
+def warmup_accelerated():
+    """Pre-warm JIT compilation (e.g. Numba) before timing tests."""
+    name = _read_student_name()
+    v = get_variant(name, n_variants=4)
+    try:
+        from hw06.accelerated import accelerated_run
+        accelerated_run(v)
+    except Exception:
+        pass
