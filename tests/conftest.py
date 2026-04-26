@@ -43,10 +43,19 @@ def variant(student_name: str) -> int:
 @pytest.fixture(scope="session", autouse=True)
 def warmup_accelerated():
     """Pre-warm JIT compilation (e.g. Numba) before timing tests."""
+    import warnings
+
     name = _read_student_name()
     v = get_variant(name, n_variants=4)
     try:
         from hw06.accelerated import accelerated_run
         accelerated_run(v)
-    except Exception:
+    except NotImplementedError:
         pass
+    except Exception as e:
+        warnings.warn(
+            f"warmup_accelerated failed: {e}. "
+            "JIT compilation time may be included in accelerated_run benchmark.",
+            UserWarning,
+            stacklevel=2,
+        )
