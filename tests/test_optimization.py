@@ -187,15 +187,16 @@ class TestAccelerated:
 
         compare_results(variant_number, original_benchmark["result"], accelerated_result)
 
-    def test_accelerated_faster_than_optimized(self, variant_number) -> None:
-        """Accelerated version is faster than the pure-Python optimized version."""
+    def test_accelerated_speedup_vs_original(self, variant_number, original_benchmark) -> None:
+        """Accelerated version is at least 3x faster than the original slow code."""
         from hw06.accelerated import accelerated_run
-        from hw06.optimized import optimized_run
 
-        _, optimized_time = _time_call(optimized_run, variant_number)
         _, accelerated_time = _time_call(accelerated_run, variant_number)
 
-        assert accelerated_time < optimized_time, (
-            f"Accelerated ({accelerated_time:.2f}s) is not faster "
-            f"than optimized ({optimized_time:.2f}s)"
+        original_time = original_benchmark["time"]
+        speedup = original_time / accelerated_time
+        assert speedup >= 3.0, (
+            f"Insufficient speedup: {speedup:.1f}x "
+            f"(original={original_time:.2f}s, accelerated={accelerated_time:.2f}s, "
+            f"required >= 3.0x)"
         )

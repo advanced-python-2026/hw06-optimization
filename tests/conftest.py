@@ -49,6 +49,7 @@ def warmup_accelerated():
     v = get_variant(name, n_variants=4)
     try:
         from hw06.accelerated import accelerated_run
+
         accelerated_run(v)
     except NotImplementedError:
         pass

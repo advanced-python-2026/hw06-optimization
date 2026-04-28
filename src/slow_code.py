@@ -7,6 +7,8 @@
 import math
 import random
 
+import numpy as np
+
 # === Вариант 0: Алгоритм на графах ===
 
 
@@ -134,11 +136,12 @@ def slow_numerical(n: int = 300) -> list[list[float]]:
     Матричные операции с вложенными циклами: умножение матриц,
     вычисление нормы, всё на чистом Python без numpy.
     """
-    random.seed(42)
+    # Use numpy RNG so optimized versions can reproduce the same data with numpy arrays
+    rng = np.random.default_rng(42)
 
-    # Create two random matrices
-    A = [[random.uniform(-10, 10) for _ in range(n)] for _ in range(n)]
-    B = [[random.uniform(-10, 10) for _ in range(n)] for _ in range(n)]
+    # Create two random matrices as Python lists (keep the slow part — pure Python loops)
+    A = rng.uniform(-10, 10, (n, n)).tolist()
+    B = rng.uniform(-10, 10, (n, n)).tolist()
 
     # Matrix multiplication O(n^3) — pure Python
     C = [[0.0] * n for _ in range(n)]

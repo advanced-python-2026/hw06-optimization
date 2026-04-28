@@ -3,7 +3,7 @@ name = "hw06-optimization"
 version = "0.1.0"
 description = "ДЗ 6 — Оптимизация кода"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = ["numpy>=1.26"]
 
 [build-system]
 requires = ["hatchling"]
