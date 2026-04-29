@@ -199,7 +199,9 @@ def slow_text_parsing(text_size: int = 500_000) -> dict:
         "at",
         "by",
     ]
-    text = " ".join(random.choice(words) for _ in range(text_size))
+    # random.choices is faster than a loop of random.choice and can be reproduced
+    # in optimized versions — use it here so students are not blocked by generation
+    text = " ".join(random.choices(words, k=text_size))
 
     # Deliberately slow pattern search
     patterns = ["error", "warning", "critical", "timeout", "failure"]

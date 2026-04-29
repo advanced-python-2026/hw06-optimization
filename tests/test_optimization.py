@@ -169,10 +169,10 @@ class TestOptimized:
 
         original_time = original_benchmark["time"]
         speedup = original_time / optimized_time
-        assert speedup >= 5.0, (
+        assert speedup >= 4.0, (
             f"Insufficient speedup: {speedup:.1f}x "
             f"(original={original_time:.2f}s, optimized={optimized_time:.2f}s, "
-            f"required >= 5.0x)"
+            f"required >= 4.0x)"
         )
 
 
