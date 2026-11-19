@@ -17,7 +17,6 @@ import time
 import pytest
 
 from src.slow_code import VARIANTS
-from tests.conftest import _read_student_name, get_variant
 
 # ---------------------------------------------------------------------------
 # Helpers for comparing results across different variant return types
@@ -122,10 +121,9 @@ def _time_call(func, *args, **kwargs) -> tuple:
 
 
 @pytest.fixture(scope="session")
-def variant_number():
-    """Session-scoped variant calculation."""
-    name = _read_student_name()
-    return get_variant(name, n_variants=4)
+def variant_number(variant: int) -> int:
+    """Session-scoped alias for the shared variant fixture."""
+    return variant
 
 
 @pytest.fixture(scope="session")

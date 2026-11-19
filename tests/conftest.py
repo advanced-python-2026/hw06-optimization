@@ -4,9 +4,9 @@ from pathlib import Path
 
 import pytest
 
-STUDENT_FILE = Path(__file__).resolve().parent.parent / "STUDENT.md"
+STUDENT_FILE = Path.cwd() / "STUDENT.md"
 HW_NUMBER = 6
-SEMESTER = "2026-spring"
+SEMESTER = "2027-spring"
 
 
 def _read_student_name() -> str:
@@ -30,12 +30,12 @@ def get_variant(name: str, n_variants: int, hw: int = HW_NUMBER) -> int:
     return int(h[:8], 16) % n_variants
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def student_name() -> str:
     return _read_student_name()
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def variant(student_name: str) -> int:
     return get_variant(student_name, n_variants=4)
 
