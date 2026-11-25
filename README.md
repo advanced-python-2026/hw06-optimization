@@ -1,6 +1,6 @@
 # ДЗ 6 — Профилирование и оптимизация кода
 
-Полный текст задания: https://advanced-python.ru/advanced-python/homework/hw06
+Полный текст задания: https://courses.sabal.pro/advanced-python/homework/hw06
 
 ## Быстрый старт
 
